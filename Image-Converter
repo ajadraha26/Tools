@@ -1,519 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Free online tool to convert between JPG, PNG, GIF, WebP and other image formats. Fast, secure and easy to use.">
-    <meta name="keywords" content="image converter, JPG to PNG, PNG to WebP, GIF converter, image format converter">
-    <title>Image Converter | Convert Between JPG, PNG, GIF, WebP Formats</title>
-    <style>
-        :root {
-            --primary-color: #4a6bff;
-            --secondary-color: #f8f9fa;
-            --accent-color: #ff6b6b;
-            --text-color: #333;
-            --light-text: #6c757d;
-        }
-        
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f7ff;
-            color: var(--text-color);
-            line-height: 1.6;
-        }
-        
-        header {
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
-        
-        .login-btn {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        main {
-            padding: 2rem 0;
-        }
-        
-        .hero {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-        
-        .hero p {
-            font-size: 1.1rem;
-            color: var(--light-text);
-            max-width: 700px;
-            margin: 0 auto 2rem;
-        }
-        
-        .converter-container {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .upload-area {
-            border: 2px dashed #ddd;
-            border-radius: 8px;
-            padding: 3rem 1rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-bottom: 2rem;
-        }
-        
-        .upload-area:hover {
-            border-color: var(--primary-color);
-            background-color: rgba(74, 107, 255, 0.05);
-        }
-        
-        .upload-icon {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-        
-        .file-input {
-            display: none;
-        }
-        
-        .options-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .option-group {
-            flex: 1;
-            min-width: 250px;
-        }
-        
-        .option-group h3 {
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-        
-        select, button {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-        }
-        
-        button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background-color 0.3s;
-        }
-        
-        button:hover {
-            background-color: #3a5bef;
-        }
-        
-        .ad-container {
-            background-color: white;
-            border-radius: 10px;
-            padding: 1rem;
-            margin: 2rem 0;
-            text-align: center;
-            min-height: 90px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin: 3rem 0;
-        }
-        
-        .feature-card {
-            background-color: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .feature-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-        
-        footer {
-            background-color: #333;
-            color: white;
-            padding: 2rem 0;
-            margin-top: 3rem;
-        }
-        
-        .footer-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-        }
-        
-        .footer-column h3 {
-            margin-bottom: 1rem;
-            color: #fff;
-        }
-        
-        .footer-column ul {
-            list-style: none;
-        }
-        
-        .footer-column ul li {
-            margin-bottom: 0.5rem;
-        }
-        
-        .footer-column ul li a {
-            color: #ddd;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-column ul li a:hover {
-            color: white;
-        }
-        
-        .copyright {
-            text-align: center;
-            margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 1px solid #444;
-            color: #aaa;
-        }
-        
-        @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .options-container {
-                flex-direction: column;
-            }
-        }
-    </style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Universal Image Format Converter</title>
+  <meta name="description" content="Convert between JPEG, PNG, GIF, BMP, TIFF, WebP, SVG and RAW formats easily with quality settings. Fast, responsive, SEO optimized."/>
+  <meta name="keywords" content="image converter, PNG to JPEG, RAW to PNG, WebP converter, base64 SVG converter"/>
+  <link rel="canonical" href="https://yourdomain.com/image-converter"/>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebApplication",
+    "name":"Universal Image Format Converter",
+    "url":"https://yourdomain.com/image-converter",
+    "applicationCategory":"Utility",
+    "description":"Convert between JPG, PNG, GIF, BMP, TIFF, WebP, SVG, and RAW formats with quality options."
+  }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <header>
-        <div class="container nav-container">
-            <a href="/" class="logo">ImageConverter</a>
-            <div class="nav-links">
-                <a href="#">Home</a>
-                <a href="#">Tools</a>
-                <a href="#">Features</a>
-                <a href="#">Pricing</a>
-                <a href="#" class="login-btn">Login</a>
-            </div>
-        </div>
-    </header>
-    
-    <main class="container">
-        <section class="hero">
-            <h1>Convert Between Image Formats</h1>
-            <p>Transform your images between JPG, PNG, GIF, WebP and other formats with our free online converter. Fast, secure, and no registration required.</p>
-        </section>
-        
-        <!-- AdSense Ad Unit -->
-        <div class="ad-container">
-            <!-- Replace with your AdSense code -->
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID"
-                crossorigin="anonymous"></script>
-            <!-- Image Converter Top Banner -->
-            <ins class="adsbygoogle"
-                style="display:block"
-                data-ad-client="ca-pub-YOUR_ADSENSE_ID"
-                data-ad-slot="YOUR_AD_SLOT_ID"
-                data-ad-format="auto"
-                data-full-width-responsive="true"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-        
-        <section class="converter-container">
-            <div class="upload-area" id="uploadArea">
-                <div class="upload-icon">↑</div>
-                <h3>Drag & Drop Your Image Here</h3>
-                <p>or click to browse files</p>
-                <input type="file" id="fileInput" class="file-input" accept="image/*">
-            </div>
-            
-            <div class="options-container">
-                <div class="option-group">
-                    <h3>Output Format</h3>
-                    <select id="outputFormat">
-                        <option value="jpg">JPG</option>
-                        <option value="png">PNG</option>
-                        <option value="gif">GIF</option>
-                        <option value="webp">WebP</option>
-                        <option value="bmp">BMP</option>
-                        <option value="tiff">TIFF</option>
-                    </select>
-                </div>
-                
-                <div class="option-group">
-                    <h3>Quality Level</h3>
-                    <select id="qualityLevel">
-                        <option value="high">High Quality (Large File)</option>
-                        <option value="medium" selected>Medium Quality (Recommended)</option>
-                        <option value="low">Low Quality (Small File)</option>
-                    </select>
-                </div>
-                
-                <div class="option-group">
-                    <h3>Additional Options</h3>
-                    <select id="additionalOptions">
-                        <option value="none">No Additional Processing</option>
-                        <option value="resize">Resize Image</option>
-                        <option value="compress">Compress Image</option>
-                        <option value="optimize">Optimize for Web</option>
-                    </select>
-                </div>
-            </div>
-            
-            <button id="convertBtn">Convert Image</button>
-        </section>
-        
-        <!-- Middle Ad Unit -->
-        <div class="ad-container">
-            <!-- Replace with your AdSense code -->
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID"
-                crossorigin="anonymous"></script>
-            <!-- Image Converter Middle Rectangle -->
-            <ins class="adsbygoogle"
-                style="display:block"
-                data-ad-client="ca-pub-YOUR_ADSENSE_ID"
-                data-ad-slot="YOUR_AD_SLOT_ID"
-                data-ad-format="auto"
-                data-full-width-responsive="true"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-        
-        <section class="features">
-            <div class="feature-card">
-                <h3>JPG Converter</h3>
-                <p>Convert any image to JPG format, ideal for photographs and complex images with many colors.</p>
-            </div>
-            <div class="feature-card">
-                <h3>PNG Converter</h3>
-                <p>Convert to PNG for lossless compression, perfect for graphics with transparency.</p>
-            </div>
-            <div class="feature-card">
-                <h3>GIF Converter</h3>
-                <p>Create animated GIFs or convert existing GIFs to other formats while preserving animation.</p>
-            </div>
-            <div class="feature-card">
-                <h3>WebP Converter</h3>
-                <p>Modern format providing superior lossless and lossy compression for web images.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Bulk Conversion</h3>
-                <p>Convert multiple images at once to save time when working with large collections.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Secure Processing</h3>
-                <p>All files are processed in your browser. Your images never leave your computer.</p>
-            </div>
-        </section>
-        
-        <!-- Bottom Ad Unit -->
-        <div class="ad-container">
-            <!-- Replace with your AdSense code -->
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID"
-                crossorigin="anonymous"></script>
-            <!-- Image Converter Bottom Banner -->
-            <ins class="adsbygoogle"
-                style="display:block"
-                data-ad-client="ca-pub-YOUR_ADSENSE_ID"
-                data-ad-slot="YOUR_AD_SLOT_ID"
-                data-ad-format="auto"
-                data-full-width-responsive="true"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-    </main>
-    
-    <footer>
-        <div class="container footer-container">
-            <div class="footer-column">
-                <h3>Tools</h3>
-                <ul>
-                    <li><a href="#">JPG Converter</a></li>
-                    <li><a href="#">PNG Converter</a></li>
-                    <li><a href="#">GIF Converter</a></li>
-                    <li><a href="#">WebP Converter</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Company</h3>
-                <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Support</h3>
-                <ul>
-                    <li><a href="#">Help Center</a></li>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Feedback</a></li>
-                    <li><a href="#">Report Issue</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Connect</h3>
-                <ul>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Twitter</a></li>
-                    <li><a href="#">Facebook</a></li>
-                    <li><a href="#">Instagram</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2023 ImageConverter. All rights reserved.</p>
-        </div>
-    </footer>
+<body class="bg-gray-100 font-sans text-gray-900">
+  <header class="bg-white shadow p-4 text-center">
+    <h1 class="text-3xl font-bold">Universal Image Format Converter</h1>
+  </header>
+  <!-- AdSense Top -->
+  <div class="my-4 flex justify-center"><!-- Replace IDs below -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-YOUR_ID"
+         data-ad-slot="TOP_SLOT"
+         data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+  </div>
 
-    <script>
-        // Basic functionality for file upload
-        const uploadArea = document.getElementById('uploadArea');
-        const fileInput = document.getElementById('fileInput');
-        const convertBtn = document.getElementById('convertBtn');
-        
-        uploadArea.addEventListener('click', () => {
-            fileInput.click();
-        });
-        
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadArea.style.borderColor = 'var(--primary-color)';
-            uploadArea.style.backgroundColor = 'rgba(74, 107, 255, 0.1)';
-        });
-        
-        uploadArea.addEventListener('dragleave', () => {
-            uploadArea.style.borderColor = '#ddd';
-            uploadArea.style.backgroundColor = 'transparent';
-        });
-        
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadArea.style.borderColor = '#ddd';
-            uploadArea.style.backgroundColor = 'transparent';
-            
-            if (e.dataTransfer.files.length) {
-                fileInput.files = e.dataTransfer.files;
-                updateFileInfo();
+  <main class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow space-y-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-medium">Source Files:</label>
+        <input type="file" id="fileInput" accept="image/*,.cr2,.nef" multiple class="mt-1 w-full p-2 border rounded"/>
+      </div>
+      <div>
+        <label class="block text-sm font-medium">Target Format:</label>
+        <select id="targetFormat" class="mt-1 w-full border p-2 rounded">
+          <option>image/jpeg</option>
+          <option>image/png</option>
+          <option>image/gif</option>
+          <option>image/bmp</option>
+          <option>image/webp</option>
+          <option>image/svg+xml</option>
+          <option>application/octet-stream">RAW (Preserve)</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium">Editing Level:</label>
+        <select id="qualityLevel" class="mt-1 w-full border p-2 rounded">
+          <option value="0.5">Low</option>
+          <option value="0.75" selected>Medium</option>
+          <option value="1">High</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium">Backend Upload Enabled:</label>
+        <select id="uploadEnabled" class="mt-1 w-full border p-2 rounded">
+          <option value="no" selected>No</option>
+          <option value="yes">Yes (Upload)</option>
+        </select>
+      </div>
+    </div>
+    <div class="text-center">
+      <button class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700" onclick="convertImages()">Convert</button>
+    </div>
+    <div id="output" class="grid grid-cols-1 gap-4"></div>
+  </main>
+
+  <!-- AdSense Bottom -->
+  <div class="my-6 flex justify-center">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-YOUR_ID"
+         data-ad-slot="BOTTOM_SLOT"
+         data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+  </div>
+  <footer class="py-4 text-center text-gray-500">&copy; 2025 Your Company</footer>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <script>
+    function isRaster(mime){ return ['image/jpeg','image/png','image/webp','image/bmp'].includes(mime); }
+
+    async function convertImages(){
+      const files=[...document.getElementById('fileInput').files];
+      const target=document.getElementById('targetFormat').value;
+      const quality=+document.getElementById('qualityLevel').value;
+      const uploadEnabled=document.getElementById('uploadEnabled').value==='yes';
+      const output=document.getElementById('output');
+      output.innerHTML='';
+
+      if(!files.length) return alert('Please select files.');
+
+      for(const f of files){
+        const reader=new FileReader();
+        reader.onload=async e=>{
+          const dataURL=e.target.result;
+          let resultBlob, downloadName;
+
+          if(f.type.startsWith('image/') && isRaster(target)){
+            const img=new Image();
+            img.onload=()=>{
+              const c=document.createElement('canvas');
+              c.width=img.width; c.height=img.height;
+              const ctx=c.getContext('2d');
+              ctx.drawImage(img,0,0);
+              c.toBlob(blob=>{
+                resultBlob=blob;
+                downloadName=f.name.replace(/\.[^/.]+$/,'.'+target.split('/')[1]);
+                handleResult(c.toDataURL(target, quality), downloadName, resultBlob);
+              }, target, quality);
+            };
+            img.src=dataURL;
+
+          } else if(f.type==='image/svg+xml' && target==='image/svg+xml'){
+            // direct pass-through
+            handleResult(dataURL, f.name, new Blob([f],{type:f.type}));
+
+          } else if(!f.type.startsWith('image/') || target.startsWith('application')){
+            // RAW or unsupported conversion
+            output.insertAdjacentHTML('beforeend',`<p class="text-red-600">RAW unsupported in browser for <strong>${f.name}</strong>. Sending to server for handling.</p>`);
+            if(uploadEnabled){
+              const fd=new FormData(); fd.append('file',f); fd.append('target',target);
+              fetch('/api/convert', { method:'POST', body:fd })
+              .then(r=>r.blob()).then(blob=>{
+                const url=URL.createObjectURL(blob);
+                const a=document.createElement('a'); a.href=url; a.download=f.name;
+                a.text=`Download converted ${f.name}`; output.appendChild(a);
+              });
             }
-        });
-        
-        fileInput.addEventListener('change', updateFileInfo);
-        
-        function updateFileInfo() {
-            if (fileInput.files.length) {
-                const file = fileInput.files[0];
-                uploadArea.innerHTML = `
-                    <div style="font-size: 3rem;">✓</div>
-                    <h3>${file.name}</h3>
-                    <p>${(file.size / 1024).toFixed(2)} KB</p>
-                `;
-            }
+          } else {
+            output.insertAdjacentHTML('beforeend',`<p class="text-red-600">Conversion not supported for ${f.name}</p>`);
+          }
+        };
+        reader.readAsDataURL(f);
+      }
+
+      function handleResult(dataURL,name,blob){
+        const div=document.createElement('div');
+        div.innerHTML=`<p><strong>${name}</strong></p><img src="${dataURL}" alt="${name}" class="max-w-full border"/><a href="${dataURL}" download="${name}" class="mt-1 inline-block text-blue-700 underline">Download</a>`;
+        output.appendChild(div);
+        if(uploadEnabled){
+          const fd=new FormData(); fd.append('file',blob, name);
+          fetch('/api/convert', { method:'POST', body:fd }).then(console.log);
         }
-        
-        convertBtn.addEventListener('click', () => {
-            if (!fileInput.files.length) {
-                alert('Please select an image file first');
-                return;
-            }
-            
-            // In a real implementation, this would convert the image
-            alert('Conversion would happen here in a real implementation. Selected format: ' + 
-                  document.getElementById('outputFormat').value);
-        });
-    </script>
+      }
+    }
+  </script>
 </body>
 </html>
