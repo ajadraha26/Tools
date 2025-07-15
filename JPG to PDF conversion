@@ -1,758 +1,181 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Free online tool to convert PDF to JPG and JPG to PDF. Convert documents to images or create PDFs from images with our easy-to-use converter.">
-    <meta name="keywords" content="PDF to JPG, JPG to PDF, convert PDF to image, image to PDF converter, PDF converter">
-    <title>PDF ↔ JPG Converter | Free Online Conversion Tool</title>
-    <style>
-        :root {
-            --primary-color: #4a6bff;
-            --secondary-color: #f8f9fa;
-            --accent-color: #3498db;
-            --text-color: #333;
-            --light-text: #6c757d;
-        }
-        
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f9f9f9;
-            color: var(--text-color);
-            line-height: 1.6;
-        }
-        
-        header {
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
-        
-        .login-btn {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        main {
-            padding: 2rem 0;
-        }
-        
-        .converter-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        
-        .converter-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-        
-        .converter-header p {
-            font-size: 1.1rem;
-            color: var(--light-text);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        .conversion-tabs {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        .tab-btn {
-            padding: 0.8rem 2rem;
-            background: none;
-            border: none;
-            border-bottom: 3px solid transparent;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .tab-btn.active {
-            border-bottom-color: var(--primary-color);
-            color: var(--primary-color);
-        }
-        
-        .converter-container {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .upload-area {
-            border: 2px dashed #ddd;
-            border-radius: 8px;
-            padding: 3rem 1rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-bottom: 2rem;
-        }
-        
-        .upload-area:hover {
-            border-color: var(--primary-color);
-            background-color: rgba(231, 76, 60, 0.05);
-        }
-        
-        .upload-icon {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-        
-        .file-input {
-            display: none;
-        }
-        
-        .options-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .option-group {
-            margin-bottom: 1rem;
-        }
-        
-        .option-group h3 {
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-        
-        select, input, button {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-        }
-        
-        button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background-color 0.3s;
-        }
-        
-        button:hover {
-            background-color: #c0392b;
-        }
-        
-        .ad-container {
-            background-color: white;
-            border-radius: 10px;
-            padding: 1rem;
-            margin: 2rem 0;
-            text-align: center;
-            min-height: 90px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin: 3rem 0;
-        }
-        
-        .feature-card {
-            background-color: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .feature-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-        
-        .how-it-works {
-            background-color: white;
-            border-radius: 10px;
-            padding: 2rem;
-            margin: 2rem 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-        
-        .steps {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-        
-        .step {
-            flex: 1;
-            min-width: 200px;
-            text-align: center;
-            padding: 1rem;
-        }
-        
-        .step-number {
-            background-color: var(--primary-color);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto 1rem;
-            font-weight: bold;
-        }
-        
-        footer {
-            background-color: #333;
-            color: white;
-            padding: 2rem 0;
-            margin-top: 3rem;
-        }
-        
-        .footer-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-        }
-        
-        .footer-column h3 {
-            margin-bottom: 1rem;
-            color: #fff;
-        }
-        
-        .footer-column ul {
-            list-style: none;
-        }
-        
-        .footer-column ul li {
-            margin-bottom: 0.5rem;
-        }
-        
-        .footer-column ul li a {
-            color: #ddd;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-column ul li a:hover {
-            color: white;
-        }
-        
-        .copyright {
-            text-align: center;
-            margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 1px solid #444;
-            color: #aaa;
-        }
-        
-        @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .converter-header h1 {
-                font-size: 2rem;
-            }
-            
-            .conversion-tabs {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .tab-btn {
-                width: 100%;
-                border-bottom: none;
-                border-left: 3px solid transparent;
-            }
-            
-            .tab-btn.active {
-                border-bottom: none;
-                border-left-color: var(--primary-color);
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PDF ↔ JPG Converter Tool</title>
+  <meta name="description" content="Convert multiple JPG to PDF or PDF to JPG with options and Ads. Fast, free & responsive." />
+  <meta name="keywords" content="JPG to PDF, PDF to JPG, bulk JPG, convert PDF, online converter" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
 </head>
-<body>
-    <header>
-        <div class="container nav-container">
-            <a href="/" class="logo">PDF↔JPG</a>
-            <div class="nav-links">
-                <a href="#">Home</a>
-                <a href="#">Tools</a>
-                <a href="#">Features</a>
-                <a href="#">Pricing</a>
-                <a href="#" class="login-btn">Login</a>
-            </div>
-        </div>
-    </header>
-    
-    <main class="container">
-        <section class="converter-header">
-            <h1>PDF to JPG & JPG to PDF Converter</h1>
-            <p>Convert your documents to images or create PDFs from images with our free online tool. Fast, secure, and easy to use with no registration required.</p>
-        </section>
-        
-        <!-- AdSense Ad Unit (Top) -->
-        <div class="ad-container">
-            <!-- Replace with your AdSense code -->
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID"
-                crossorigin="anonymous"></script>
-            <!-- PDF Converter Top Banner -->
-            <ins class="adsbygoogle"
-                style="display:block"
-                data-ad-client="ca-pub-YOUR_ADSENSE_ID"
-                data-ad-slot="YOUR_AD_SLOT_ID"
-                data-ad-format="auto"
-                data-full-width-responsive="true"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-        
-        <div class="conversion-tabs">
-            <button class="tab-btn active" id="pdfToJpgTab">PDF to JPG</button>
-            <button class="tab-btn" id="jpgToPdfTab">JPG to PDF</button>
-        </div>
-        
-        <!-- PDF to JPG Converter -->
-        <section class="converter-container" id="pdfToJpgConverter">
-            <div class="upload-area" id="pdfUploadArea">
-                <div class="upload-icon">↑</div>
-                <h3>Drag & Drop Your PDF Here</h3>
-                <p>or click to browse files</p>
-                <input type="file" id="pdfInput" class="file-input" accept=".pdf">
-            </div>
-            
-            <div class="options-container">
-                <div class="option-group">
-                    <h3>Image Quality</h3>
-                    <select id="jpgQuality">
-                        <option value="high">High Quality (300 DPI)</option>
-                        <option value="medium" selected>Medium Quality (200 DPI)</option>
-                        <option value="low">Low Quality (150 DPI)</option>
-                    </select>
-                </div>
-                
-                <div class="option-group">
-                    <h3>Color Mode</h3>
-                    <select id="colorMode">
-                        <option value="color" selected>Color</option>
-                        <option value="grayscale">Grayscale</option>
-                        <option value="blackwhite">Black & White</option>
-                    </select>
-                </div>
-                
-                <div class="option-group">
-                    <h3>Pages to Convert</h3>
-                    <select id="pagesToConvert">
-                        <option value="all" selected>All Pages</option>
-                        <option value="range">Page Range</option>
-                        <option value="single">Single Page</option>
-                    </select>
-                    <div id="pageRangeContainer" style="display: none;">
-                        <input type="text" id="pageRange" placeholder="e.g. 1-3,5,7-9">
-                    </div>
-                </div>
-            </div>
-            
-            <button id="convertPdfToJpgBtn">Convert to JPG</button>
-        </section>
-        
-        <!-- JPG to PDF Converter (Initially Hidden) -->
-        <section class="converter-container" id="jpgToPdfConverter" style="display: none;">
-            <div class="upload-area" id="jpgUploadArea">
-                <div class="upload-icon">↑</div>
-                <h3>Drag & Drop Your JPG Images Here</h3>
-                <p>or click to browse files (multiple selection available)</p>
-                <input type="file" id="jpgInput" class="file-input" accept="image/jpeg,image/png" multiple>
-            </div>
-            
-            <div class="options-container">
-                <div class="option-group">
-                    <h3>PDF Quality</h3>
-                    <select id="pdfQuality">
-                        <option value="high" selected>High Quality (Print)</option>
-                        <option value="medium">Medium Quality (Screen)</option>
-                        <option value="low">Low Quality (Web)</option>
-                    </select>
-                </div>
-                
-                <div class="option-group">
-                    <h3>Page Size</h3>
-                    <select id="pageSize">
-                        <option value="a4">A4</option>
-                        <option value="letter" selected>Letter</option>
-                        <option value="legal">Legal</option>
-                        <option value="custom">Custom</option>
-                    </select>
-                    <div id="customSizeContainer" style="display: none;">
-                        <input type="number" id="customWidth" placeholder="Width (mm)">
-                        <input type="number" id="customHeight" placeholder="Height (mm)">
-                    </div>
-                </div>
-                
-                <div class="option-group">
-                    <h3>Page Orientation</h3>
-                    <select id="pageOrientation">
-                        <option value="portrait" selected>Portrait</option>
-                        <option value="landscape">Landscape</option>
-                        <option value="auto">Auto (Match Images)</option>
-                    </select>
-                </div>
-            </div>
-            
-            <button id="convertJpgToPdfBtn">Create PDF</button>
-        </section>
-        
-        <!-- Middle Ad Unit -->
-        <div class="ad-container">
-            <!-- Replace with your AdSense code -->
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID"
-                crossorigin="anonymous"></script>
-            <!-- PDF Converter Middle Rectangle -->
-            <ins class="adsbygoogle"
-                style="display:block"
-                data-ad-client="ca-pub-YOUR_ADSENSE_ID"
-                data-ad-slot="YOUR_AD_SLOT_ID"
-                data-ad-format="auto"
-                data-full-width-responsive="true"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-        
-        <section class="how-it-works">
-            <h2>How It Works</h2>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Upload File</h3>
-                    <p>Drag & drop your PDF or JPG file or click to browse your computer</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Adjust Settings</h3>
-                    <p>Select your preferred conversion options and quality settings</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Convert & Download</h3>
-                    <p>Click convert and download your file in seconds</p>
-                </div>
-            </div>
-        </section>
-        
-        <section class="features">
-            <div class="feature-card">
-                <h3>High Quality Conversions</h3>
-                <p>Get crystal clear JPG images from your PDFs or create professional PDFs from your images.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Batch Processing</h3>
-                <p>Convert multiple PDF pages to JPGs or combine multiple JPGs into a single PDF.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Secure Processing</h3>
-                <p>All files are processed in your browser. Your documents never leave your computer.</p>
-            </div>
-            <div class="feature-card">
-                <h3>No Watermarks</h3>
-                <p>Get clean, professional results without any annoying watermarks.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Free to Use</h3>
-                <p>No hidden charges or subscriptions - completely free for unlimited use.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Works on Any Device</h3>
-                <p>Use our converter on desktop, tablet, or mobile - no software installation needed.</p>
-            </div>
-        </section>
-        
-        <!-- Bottom Ad Unit -->
-        <div class="ad-container">
-            <!-- Replace with your AdSense code -->
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID"
-                crossorigin="anonymous"></script>
-            <!-- PDF Converter Bottom Banner -->
-            <ins class="adsbygoogle"
-                style="display:block"
-                data-ad-client="ca-pub-YOUR_ADSENSE_ID"
-                data-ad-slot="YOUR_AD_SLOT_ID"
-                data-ad-format="auto"
-                data-full-width-responsive="true"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-    </main>
-    
-    <footer>
-        <div class="container footer-container">
-            <div class="footer-column">
-                <h3>Conversion Tools</h3>
-                <ul>
-                    <li><a href="#">PDF to JPG</a></li>
-                    <li><a href="#">JPG to PDF</a></li>
-                    <li><a href="#">PDF to PNG</a></li>
-                    <li><a href="#">PDF to Word</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Company</h3>
-                <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Support</h3>
-                <ul>
-                    <li><a href="#">Help Center</a></li>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Feedback</a></li>
-                    <li><a href="#">Report Issue</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Connect</h3>
-                <ul>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Twitter</a></li>
-                    <li><a href="#">Facebook</a></li>
-                    <li><a href="#">Instagram</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2023 PDF↔JPG Converter. All rights reserved.</p>
-        </div>
-    </footer>
 
-    <script>
-        // Tab switching functionality
-        const pdfToJpgTab = document.getElementById('pdfToJpgTab');
-        const jpgToPdfTab = document.getElementById('jpgToPdfTab');
-        const pdfToJpgConverter = document.getElementById('pdfToJpgConverter');
-        const jpgToPdfConverter = document.getElementById('jpgToPdfConverter');
-        
-        pdfToJpgTab.addEventListener('click', () => {
-            pdfToJpgTab.classList.add('active');
-            jpgToPdfTab.classList.remove('active');
-            pdfToJpgConverter.style.display = 'block';
-            jpgToPdfConverter.style.display = 'none';
-        });
-        
-        jpgToPdfTab.addEventListener('click', () => {
-            jpgToPdfTab.classList.add('active');
-            pdfToJpgTab.classList.remove('active');
-            jpgToPdfConverter.style.display = 'block';
-            pdfToJpgConverter.style.display = 'none';
-        });
-        
-        // File upload functionality for PDF to JPG
-        const pdfUploadArea = document.getElementById('pdfUploadArea');
-        const pdfInput = document.getElementById('pdfInput');
-        
-        pdfUploadArea.addEventListener('click', () => {
-            pdfInput.click();
-        });
-        
-        pdfUploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            pdfUploadArea.style.borderColor = 'var(--primary-color)';
-            pdfUploadArea.style.backgroundColor = 'rgba(231, 76, 60, 0.1)';
-        });
-        
-        pdfUploadArea.addEventListener('dragleave', () => {
-            pdfUploadArea.style.borderColor = '#ddd';
-            pdfUploadArea.style.backgroundColor = 'transparent';
-        });
-        
-        pdfUploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            pdfUploadArea.style.borderColor = '#ddd';
-            pdfUploadArea.style.backgroundColor = 'transparent';
-            
-            if (e.dataTransfer.files.length) {
-                pdfInput.files = e.dataTransfer.files;
-                updatePdfFileInfo();
-            }
-        });
-        
-        pdfInput.addEventListener('change', updatePdfFileInfo);
-        
-        function updatePdfFileInfo() {
-            if (pdfInput.files.length) {
-                const file = pdfInput.files[0];
-                pdfUploadArea.innerHTML = `
-                    <div style="font-size: 3rem;">✓</div>
-                    <h3>${file.name}</h3>
-                    <p>${(file.size / 1024).toFixed(2)} KB</p>
-                `;
-            }
+<body class="bg-gray-100 font-sans text-gray-900">
+  <header class="bg-white shadow p-4">
+    <h1 class="text-2xl font-bold text-center">📄 PDF ↔ JPG Converter</h1>
+  </header>
+
+  <!-- AdSense Top -->
+  <div class="my-4 flex justify-center">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-আপনারID"
+         data-ad-slot="আপনারSlotID1"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+  </div>
+
+  <main class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow space-y-6">
+    <!-- Conversion Settings -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-medium">Conversion Type:</label>
+        <select id="conversionType" class="mt-1 w-full border p-2 rounded">
+          <option value="jpgToPdf" selected>JPG → PDF</option>
+          <option value="pdfToJpg">PDF → JPG</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium">Editing Level:</label>
+        <select id="qualityLevel" class="mt-1 w-full border p-2 rounded">
+          <option value="low">Low</option>
+          <option value="medium" selected>Medium</option>
+          <option value="high">High</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium">Orientation:</label>
+        <select id="pageOrientation" class="mt-1 w-full border p-2 rounded">
+          <option value="p" selected>Portrait</option>
+          <option value="l">Landscape</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium">Page Size:</label>
+        <select id="pageSize" class="mt-1 w-full border p-2 rounded">
+          <option value="a4" selected>A4</option>
+          <option value="letter">Letter</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium">Margin (mm):</label>
+        <select id="pageMargin" class="mt-1 w-full border p-2 rounded">
+          <option value="0">None</option>
+          <option value="10">Small</option>
+          <option value="20" selected>Medium</option>
+          <option value="30">Large</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium">Upload File(s):</label>
+        <input type="file" id="fileInput" accept=".pdf,image/jpeg" multiple class="mt-1 w-full border p-2 rounded" />
+      </div>
+    </div>
+
+    <div class="text-center">
+      <button onclick="handleConversion()" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Convert</button>
+    </div>
+
+    <div id="output" class="mt-4"></div>
+    <div id="preview" class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+  </main>
+
+  <!-- AdSense Bottom -->
+  <div class="my-6 flex justify-center">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-আপনারID"
+         data-ad-slot="আপনারSlotID2"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+  </div>
+
+  <footer class="text-center p-4 text-gray-500">
+    &copy; 2025 আপনার Company • All Rights Reserved.
+  </footer>
+
+  <!-- AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <script>
+    async function handleConversion() {
+      const files = [...document.getElementById('fileInput').files];
+      const type = document.getElementById('conversionType').value;
+      const orient = document.getElementById('pageOrientation').value;
+      const size = document.getElementById('pageSize').value;
+      const margin = +document.getElementById('pageMargin').value;
+      const output = document.getElementById('output');
+      const preview = document.getElementById('preview');
+      output.innerHTML = ''; preview.innerHTML = '';
+
+      if (files.length === 0) return alert("Upload at least one file.");
+
+      if (type === 'jpgToPdf') {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({ orientation: orient, unit: 'mm', format: size });
+        for (const file of files) {
+          const imgData = await new Promise(r => {
+            const fr = new FileReader();
+            fr.onload = e => r(e.target.result);
+            fr.readAsDataURL(file);
+          });
+          const img = new Image();
+          await new Promise(res => {
+            img.onload = () => {
+              const pw = pdf.internal.pageSize.getWidth() - 2*margin;
+              const ph = pdf.internal.pageSize.getHeight() - 2*margin;
+              let w = pw, h = (img.height*pw)/img.width;
+              if (h > ph) { h = ph; w = (img.width*ph)/img.height; }
+              const x = (pdf.internal.pageSize.getWidth() - w)/2;
+              const y = (pdf.internal.pageSize.getHeight() - h)/2;
+              pdf.addImage(imgData, 'JPEG', x, y, w, h);
+              if (files.indexOf(file) < files.length-1) pdf.addPage();
+              res();
+            };
+            img.src = imgData;
+          });
         }
-        
-        // File upload functionality for JPG to PDF
-        const jpgUploadArea = document.getElementById('jpgUploadArea');
-        const jpgInput = document.getElementById('jpgInput');
-        
-        jpgUploadArea.addEventListener('click', () => {
-            jpgInput.click();
-        });
-        
-        jpgUploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            jpgUploadArea.style.borderColor = 'var(--primary-color)';
-            jpgUploadArea.style.backgroundColor = 'rgba(231, 76, 60, 0.1)';
-        });
-        
-        jpgUploadArea.addEventListener('dragleave', () => {
-            jpgUploadArea.style.borderColor = '#ddd';
-            jpgUploadArea.style.backgroundColor = 'transparent';
-        });
-        
-        jpgUploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            jpgUploadArea.style.borderColor = '#ddd';
-            jpgUploadArea.style.backgroundColor = 'transparent';
-            
-            if (e.dataTransfer.files.length) {
-                jpgInput.files = e.dataTransfer.files;
-                updateJpgFileInfo();
-            }
-        });
-        
-        jpgInput.addEventListener('change', updateJpgFileInfo);
-        
-        function updateJpgFileInfo() {
-            if (jpgInput.files.length) {
-                const fileList = Array.from(jpgInput.files);
-                const totalSize = fileList.reduce((sum, file) => sum + file.size, 0);
-                
-                jpgUploadArea.innerHTML = `
-                    <div style="font-size: 3rem;">✓</div>
-                    <h3>${fileList.length} ${fileList.length === 1 ? 'File' : 'Files'} Selected</h3>
-                    <p>Total size: ${(totalSize / 1024).toFixed(2)} KB</p>
-                `;
-            }
+        pdf.save('converted.pdf');
+        output.innerHTML = `<p class="text-green-600">✅ PDF ডাউনলোড শুরু হয়েছে</p>`;
+
+      } else { // PDF to JPG
+        for (const file of files) {
+          const array = new Uint8Array(await file.arrayBuffer());
+          const pdfDoc = await pdfjsLib.getDocument({ data: array }).promise;
+          for (let i=1; i<=pdfDoc.numPages; i++) {
+            const page = await pdfDoc.getPage(i);
+            const vp = page.getViewport({ scale: 2 });
+            const cnv = document.createElement('canvas');
+            cnv.width = vp.width; cnv.height = vp.height;
+            await page.render({ canvasContext: cnv.getContext('2d'), viewport: vp }).promise;
+            const url = cnv.toDataURL('image/jpeg');
+            const imgEl = document.createElement('img');
+            imgEl.src = url;
+            imgEl.alt = `Page ${i}`;
+            imgEl.className = "border";
+            preview.appendChild(imgEl);
+            const a = document.createElement('a');
+            a.href = url; a.download = `${file.name.replace(/\.pdf$/,'')}_page${i}.jpg`;
+            a.text = `Download Page ${i}`;
+            a.className = "block text-blue-700 underline";
+            preview.appendChild(a);
+          }
         }
-        
-        // Show/hide page range input based on selection
-        const pagesToConvert = document.getElementById('pagesToConvert');
-        const pageRangeContainer = document.getElementById('pageRangeContainer');
-        
-        pagesToConvert.addEventListener('change', () => {
-            pageRangeContainer.style.display = 
-                pagesToConvert.value === 'range' ? 'block' : 'none';
-        });
-        
-        // Show/hide custom size inputs based on selection
-        const pageSize = document.getElementById('pageSize');
-        const customSizeContainer = document.getElementById('customSizeContainer');
-        
-        pageSize.addEventListener('change', () => {
-            customSizeContainer.style.display = 
-                pageSize.value === 'custom' ? 'block' : 'none';
-        });
-        
-        // Conversion buttons (would be connected to actual conversion logic)
-        document.getElementById('convertPdfToJpgBtn').addEventListener('click', () => {
-            if (!pdfInput.files.length) {
-                alert('Please select a PDF file first');
-                return;
-            }
-            
-            // In a real implementation, this would convert PDF to JPG
-            alert('PDF to JPG conversion would happen here in a real implementation.\n\nSelected options:\n' +
-                  `Quality: ${document.getElementById('jpgQuality').value}\n` +
-                  `Color Mode: ${document.getElementById('colorMode').value}\n` +
-                  `Pages: ${document.getElementById('pagesToConvert').value}`);
-        });
-        
-        document.getElementById('convertJpgToPdfBtn').addEventListener('click', () => {
-            if (!jpgInput.files.length) {
-                alert('Please select at least one JPG image first');
-                return;
-            }
-            
-            // In a real implementation, this would convert JPG to PDF
-            alert('JPG to PDF conversion would happen here in a real implementation.\n\nSelected options:\n' +
-                  `Quality: ${document.getElementById('pdfQuality').value}\n` +
-                  `Page Size: ${document.getElementById('pageSize').value}\n` +
-                  `Orientation: ${document.getElementById('pageOrientation').value}`);
-        });
-    </script>
+        output.innerHTML = `<p class="text-green-600">✅ নির্দিষ্ট JPG প্রিভিউ দেখুন নিচে</p>`;
+      }
+
+      // Example backend upload
+      const form = new FormData();
+      files.forEach(f=>form.append('files',f));
+      form.append('type', type);
+      fetch('/api/upload', { method:'POST', body: form })
+        .then(r=>r.json())
+        .then(j=>console.log('Server response', j))
+        .catch(e=>console.error(e));
+    }
+  </script>
 </body>
 </html>
