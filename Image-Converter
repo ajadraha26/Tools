@@ -1,157 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Universal Image Format Converter</title>
-  <meta name="description" content="Convert between JPEG, PNG, GIF, BMP, TIFF, WebP, SVG and RAW formats easily with quality settings. Fast, responsive, SEO optimized."/>
-  <meta name="keywords" content="image converter, PNG to JPEG, RAW to PNG, WebP converter, base64 SVG converter"/>
-  <link rel="canonical" href="https://yourdomain.com/image-converter"/>
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"WebApplication",
-    "name":"Universal Image Format Converter",
-    "url":"https://yourdomain.com/image-converter",
-    "applicationCategory":"Utility",
-    "description":"Convert between JPG, PNG, GIF, BMP, TIFF, WebP, SVG, and RAW formats with quality options."
-  }
-  </script>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 font-sans text-gray-900">
-  <header class="bg-white shadow p-4 text-center">
-    <h1 class="text-3xl font-bold">Universal Image Format Converter</h1>
-  </header>
-  <!-- AdSense Top -->
-  <div class="my-4 flex justify-center"><!-- Replace IDs below -->
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-YOUR_ID"
-         data-ad-slot="TOP_SLOT"
-         data-ad-format="auto" data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
-  </div>
-
-  <main class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow space-y-6">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div>
-        <label class="block text-sm font-medium">Source Files:</label>
-        <input type="file" id="fileInput" accept="image/*,.cr2,.nef" multiple class="mt-1 w-full p-2 border rounded"/>
-      </div>
-      <div>
-        <label class="block text-sm font-medium">Target Format:</label>
-        <select id="targetFormat" class="mt-1 w-full border p-2 rounded">
-          <option>image/jpeg</option>
-          <option>image/png</option>
-          <option>image/gif</option>
-          <option>image/bmp</option>
-          <option>image/webp</option>
-          <option>image/svg+xml</option>
-          <option>application/octet-stream">RAW (Preserve)</option>
-        </select>
-      </div>
-      <div>
-        <label class="block text-sm font-medium">Editing Level:</label>
-        <select id="qualityLevel" class="mt-1 w-full border p-2 rounded">
-          <option value="0.5">Low</option>
-          <option value="0.75" selected>Medium</option>
-          <option value="1">High</option>
-        </select>
-      </div>
-      <div>
-        <label class="block text-sm font-medium">Backend Upload Enabled:</label>
-        <select id="uploadEnabled" class="mt-1 w-full border p-2 rounded">
-          <option value="no" selected>No</option>
-          <option value="yes">Yes (Upload)</option>
-        </select>
-      </div>
-    </div>
-    <div class="text-center">
-      <button class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700" onclick="convertImages()">Convert</button>
-    </div>
-    <div id="output" class="grid grid-cols-1 gap-4"></div>
-  </main>
-
-  <!-- AdSense Bottom -->
-  <div class="my-6 flex justify-center">
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-YOUR_ID"
-         data-ad-slot="BOTTOM_SLOT"
-         data-ad-format="auto" data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
-  </div>
-  <footer class="py-4 text-center text-gray-500">&copy; 2025 Your Company</footer>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-
-  <script>
-    function isRaster(mime){ return ['image/jpeg','image/png','image/webp','image/bmp'].includes(mime); }
-
-    async function convertImages(){
-      const files=[...document.getElementById('fileInput').files];
-      const target=document.getElementById('targetFormat').value;
-      const quality=+document.getElementById('qualityLevel').value;
-      const uploadEnabled=document.getElementById('uploadEnabled').value==='yes';
-      const output=document.getElementById('output');
-      output.innerHTML='';
-
-      if(!files.length) return alert('Please select files.');
-
-      for(const f of files){
-        const reader=new FileReader();
-        reader.onload=async e=>{
-          const dataURL=e.target.result;
-          let resultBlob, downloadName;
-
-          if(f.type.startsWith('image/') && isRaster(target)){
-            const img=new Image();
-            img.onload=()=>{
-              const c=document.createElement('canvas');
-              c.width=img.width; c.height=img.height;
-              const ctx=c.getContext('2d');
-              ctx.drawImage(img,0,0);
-              c.toBlob(blob=>{
-                resultBlob=blob;
-                downloadName=f.name.replace(/\.[^/.]+$/,'.'+target.split('/')[1]);
-                handleResult(c.toDataURL(target, quality), downloadName, resultBlob);
-              }, target, quality);
-            };
-            img.src=dataURL;
-
-          } else if(f.type==='image/svg+xml' && target==='image/svg+xml'){
-            // direct pass-through
-            handleResult(dataURL, f.name, new Blob([f],{type:f.type}));
-
-          } else if(!f.type.startsWith('image/') || target.startsWith('application')){
-            // RAW or unsupported conversion
-            output.insertAdjacentHTML('beforeend',`<p class="text-red-600">RAW unsupported in browser for <strong>${f.name}</strong>. Sending to server for handling.</p>`);
-            if(uploadEnabled){
-              const fd=new FormData(); fd.append('file',f); fd.append('target',target);
-              fetch('/api/convert', { method:'POST', body:fd })
-              .then(r=>r.blob()).then(blob=>{
-                const url=URL.createObjectURL(blob);
-                const a=document.createElement('a'); a.href=url; a.download=f.name;
-                a.text=`Download converted ${f.name}`; output.appendChild(a);
-              });
-            }
-          } else {
-            output.insertAdjacentHTML('beforeend',`<p class="text-red-600">Conversion not supported for ${f.name}</p>`);
-          }
-        };
-        reader.readAsDataURL(f);
-      }
-
-      function handleResult(dataURL,name,blob){
-        const div=document.createElement('div');
-        div.innerHTML=`<p><strong>${name}</strong></p><img src="${dataURL}" alt="${name}" class="max-w-full border"/><a href="${dataURL}" download="${name}" class="mt-1 inline-block text-blue-700 underline">Download</a>`;
-        output.appendChild(div);
-        if(uploadEnabled){
-          const fd=new FormData(); fd.append('file',blob, name);
-          fetch('/api/convert', { method:'POST', body:fd }).then(console.log);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Converter – Convert JPG, PNG, WebP, PDF & More Online</title>
+    <meta name="description" content="Free online image converter. Convert JPG, PNG, GIF, WebP, BMP, PDF and more with quality control and instant preview. Fully responsive and SEO-optimized.">
+    <style>
+        :root { --primary: #258589; }
+        body { font-family: Arial, sans-serif; margin: 0; background: #f6fafb; color: #23242d; }
+        header, footer { background: var(--primary); color: #fff; text-align: center; padding: 1rem 0; }
+        .container { max-width: 600px; margin: 2rem auto; background: #fff; border-radius: 9px; box-shadow: 0 0 14px rgba(0,0,0,0.07); padding: 2rem; }
+        h1 { font-size: 2rem; margin-bottom: 0.6rem; }
+        .upload-section, .options-section, .action-section, .ads-section { margin-bottom: 1.2rem; }
+        .ads-section { text-align: center; border: 2px dashed #e1e1e1; min-height: 90px; margin: 1rem 0; }
+        .img-preview { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem; }
+        .img-preview img { max-height: 70px; border-radius: 6px; border: 1px solid #ccc; }
+        label { margin-right: 1rem; }
+        select, button { margin-top: 10px; }
+        button { background: var(--primary); color: #fff; border: none; padding: 0.75rem 2.2rem; border-radius: 5px; font-size: 1rem; cursor: pointer; }
+        @media (max-width: 600px) {
+            .container { padding: 1rem; }
+            .img-preview img { max-width: 60px; max-height: 50px; }
         }
-      }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Image Converter</h1>
+        <p>Convert JPG, PNG, WebP, PDF & More</p>
+    </header>
+
+    <!-- Top Advertisement Slot -->
+    <section class="ads-section" id="top-ads">
+        <!-- Google AdSense code goes here -->
+    </section>
+
+    <main class="container">
+        <section class="upload-section">
+            <input type="file" id="imageInput" accept="image/*,.pdf" multiple hidden>
+            <button onclick="document.getElementById('imageInput').click()">Upload Images</button>
+            <div class="img-preview" id="imgPreview"></div>
+        </section>
+
+        <section class="options-section">
+            <label><b>Convert To:</b></label>
+            <select id="outputFormat">
+                <option value="jpg">JPG</option>
+                <option value="png">PNG</option>
+                <option value="webp">WEBP</option>
+                <option value="gif">GIF</option>
+                <option value="bmp">BMP</option>
+                <option value="pdf">PDF</option>
+            </select>
+            <br>
+            <label><b>Optimization Level:</b></label>
+            <label><input type="radio" name="quality" value="high" checked> High</label>
+            <label><input type="radio" name="quality" value="medium"> Standard</label>
+            <label><input type="radio" name="quality" value="low"> Small File</label>
+        </section>
+
+        <section class="action-section">
+            <button onclick="convertImages()">Convert & Download</button>
+        </section>
+
+        <!-- Middle Advertisement Slot -->
+        <section class="ads-section" id="middle-ads">
+            <!-- Google AdSense code goes here -->
+        </section>
+    </main>
+
+    <footer>
+        &copy; 2025 Image Converter Tool
+    </footer>
+
+    <!-- Bottom Advertisement Slot -->
+    <section class="ads-section" id="bottom-ads">
+        <!-- Google AdSense code goes here -->
+    </section>
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Image Converter",
+      "url": "https://your-domain.com",
+      "applicationCategory": "File Conversion Tool",
+      "operatingSystem": "All"
     }
-  </script>
+    </script>
+
+    <!-- Conversion Logic -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+    const imgPreview = document.getElementById('imgPreview');
+    const imageInput = document.getElementById('imageInput');
+    let images = [];
+
+    imageInput.addEventListener('change', function(event) {
+        images = Array.from(event.target.files);
+        imgPreview.innerHTML = '';
+        images.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = e => {
+                if(file.type.startsWith("image/")) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    imgPreview.appendChild(img);
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+
+    function getQuality() {
+        const q = document.querySelector('input[name="quality"]:checked').value;
+        if(q === "high") return 1.0;
+        if(q === "medium") return 0.8;
+        return 0.6;
+    }
+
+    function convertImages() {
+        const format = document.getElementById('outputFormat').value;
+        if (!images.length) {
+            alert('Please upload at least one image.');
+            return;
+        }
+        if(format === 'pdf') {
+            convertToPDF(images, getQuality());
+        } else {
+            images.forEach(async (file, i) => {
+                const canvas = document.createElement('canvas');
+                const img = new Image();
+                img.onload = () => {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    let mime = 'image/jpeg';
+                    if(format === 'png') mime = 'image/png';
+                    else if(format === 'webp') mime = 'image/webp';
+                    else if(format === 'gif') mime = 'image/gif';
+                    else if(format === 'bmp') mime = 'image/bmp';
+                    const link = document.createElement('a');
+                    link.download = `${file.name.split('.')[0]}.${format}`;
+                    link.href = canvas.toDataURL(mime, getQuality());
+                    link.click();
+                };
+                img.src = URL.createObjectURL(file);
+            });
+        }
+    }
+
+    async function convertToPDF(files, quality) {
+        const { jsPDF } = window.jspdf;
+        let pdf = new jsPDF();
+        for (let i = 0; i < files.length; i++) {
+            const imgData = await fileToDataURL(files[i]);
+            const imgProps = pdf.getImageProperties(imgData);
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            if(i) pdf.addPage();
+            pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight, '', 'JPEG', quality);
+        }
+        pdf.save('converted.pdf');
+    }
+
+    function fileToDataURL(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (err) => reject(err);
+            reader.readAsDataURL(file);
+        });
+    }
+    </script>
+
+    <!-- Google AdSense Integration -->
+    <script>
+        function insertAdUnit(adContainerId, adUnitId, adSlot) {
+            document.getElementById(adContainerId).innerHTML =
+              `<ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-${adUnitId}"
+                     data-ad-slot="${adSlot}"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+               <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>`;
+        }
+        // Usage example:
+        // insertAdUnit('top-ads', 'YOUR_AD_UNIT_ID', 'YOUR_SLOT');
+        // insertAdUnit('middle-ads', 'YOUR_AD_UNIT_ID', 'YOUR_SLOT');
+        // insertAdUnit('bottom-ads', 'YOUR_AD_UNIT_ID', 'YOUR_SLOT');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </body>
 </html>
