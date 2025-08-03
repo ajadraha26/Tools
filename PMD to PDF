@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PMD to PDF Converter | Convert PMD Files Online</title>
+    <meta name="description" content="Free online PMD to PDF converter. Select editing levels, optimize your PDFs, and convert PMD files instantly with our easy-to-use tool.">
+    <meta name="keywords" content="PMD to PDF, file converter, PDF optimization, document conversion, online converter">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f4f8;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        }
+        
+        .ad-container {
+            min-height: 90px;
+            background-color: #f9fafb;
+            border: 1px dashed #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .file-drop-area {
+            border: 2px dashed #cbd5e1;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .file-drop-area.active {
+            border-color: #4f46e5;
+            background-color: rgba(79, 70, 229, 0.05);
+        }
+        
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        
+        /* Custom range slider styling */
+        input[type="range"] {
+            -webkit-appearance: none;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            background-image: linear-gradient(#4f46e5, #4f46e5);
+            background-repeat: no-repeat;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #4f46e5;
+            cursor: pointer;
+            box-shadow: 0 0 2px 0 #555;
+        }
+
+        input[type="range"]::-webkit-slider-runnable-track {
+            -webkit-appearance: none;
+            box-shadow: none;
+            border: none;
+            background: transparent;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="gradient-bg text-white py-4 shadow-lg">
+        <div class="container mx-auto px-4 md:px-6 flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center mb-4 md:mb-0">
+                <svg class="w-8 h-8 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 18H17V16H7V18Z" fill="white"/>
+                    <path d="M17 14H7V12H17V14Z" fill="white"/>
+                    <path d="M7 10H11V8H7V10Z" fill="white"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M6 2C4.34315 2 3 3.34315 3 5V19C3 20.6569 4.34315 22 6 22H18C19.6569 22 21 20.6569 21 19V9C21 5.13401 17.866 2 14 2H6ZM5 5C5 4.44772 5.44772 4 6 4H14C16.7614 4 19 6.23858 19 9V19C19 19.5523 18.5523 20 18 20H6C5.44772 20 5 19.5523 5 19V5Z" fill="white"/>
+                </svg>
+                <h1 class="text-xl md:text-2xl font-bold">PMD to PDF Converter</h1>
+            </div>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#features" class="hover:text-indigo-200 transition">Features</a></li>
+                    <li><a href="#how-it-works" class="hover:text-indigo-200 transition">How It Works</a></li>
+                    <li><a href="#faq" class="hover:text-indigo-200 transition">FAQ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Top Ad Banner -->
+    <div class="container mx-auto px-4 md:px-6 py-4">
+        <div class="ad-container rounded-lg" id="top-ad">
+            <p class="text-gray-500 text-sm">Advertisement Space</p>
+            <!-- Google AdSense Ad will be inserted here -->
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 md:px-6 py-8">
+        <section class="mb-12 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-800">Convert PMD to PDF Easily</h2>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                Transform your PMD files into high-quality, optimized PDFs with our free online converter. 
+                Select your editing level and get professional results in seconds.
+            </p>
+        </section>
+
+        <!-- Converter Tool -->
+        <section class="bg-white rounded-xl shadow-lg p-6 mb-12">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Step 1: Upload -->
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center">
+                        <span class="bg-indigo-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">1</span>
+                        Upload PMD File
+                    </h3>
+                    
+                    <div class="file-drop-area p-8 text-center cursor-pointer" id="drop-area">
+                        <input type="file" id="file-input" class="hidden" accept=".pmd,.md,.markdown,.txt" />
+                        <div class="mb-4">
+                            <i class="fas fa-cloud-upload-alt text-4xl text-indigo-500"></i>
+                        </div>
+                        <p class="mb-2 font-medium">Drag & drop your file here</p>
+                        <p class="text-sm text-gray-500 mb-4">or</p>
+                        <button id="browse-btn" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                            Browse Files
+                        </button>
+                        <p class="mt-4 text-xs text-gray-500">Supported formats: .pmd, .md, .markdown, .txt</p>
+                    </div>
+                    
+                    <div id="file-info" class="mt-4 hidden">
+                        <div class="flex items-center p-3 bg-indigo-50 rounded-lg">
+                            <i class="fas fa-file-alt text-indigo-500 mr-3"></i>
+                            <div class="flex-1">
+                                <p id="file-name" class="font-medium text-gray-800 truncate"></p>
+                                <p id="file-size" class="text-xs text-gray-500"></p>
+                            </div>
+                            <button id="remove-file" class="text-red-500 hover:text-red-700">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Configure -->
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center">
+                        <span class="bg-indigo-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">2</span>
+                        Configure Options
+                    </h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Editing Level</label>
+                            <select id="editing-level" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="basic">Basic (Simple Conversion)</option>
+                                <option value="standard" selected>Standard (Formatting & Structure)</option>
+                                <option value="advanced">Advanced (Full Optimization)</option>
+                                <option value="professional">Professional (Enhanced Features)</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">PDF Quality</label>
+                            <div class="flex items-center">
+                                <span class="text-sm text-gray-500 mr-2">Low</span>
+                                <input type="range" id="quality-slider" min="1" max="5" value="3" class="w-full">
+                                <span class="text-sm text-gray-500 ml-2">High</span>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Higher quality may result in larger file size</p>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Additional Options</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="include-toc" class="rounded text-indigo-600 focus:ring-indigo-500">
+                                    <span class="ml-2 text-gray-700">Include Table of Contents</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="optimize-images" class="rounded text-indigo-600 focus:ring-indigo-500" checked>
+                                    <span class="ml-2 text-gray-700">Optimize Images</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="add-page-numbers" class="rounded text-indigo-600 focus:ring-indigo-500" checked>
+                                    <span class="ml-2 text-gray-700">Add Page Numbers</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Convert & Download -->
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center">
+                        <span class="bg-indigo-600 text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">3</span>
+                        Convert & Download
+                    </h3>
+                    
+                    <div class="space-y-6">
+                        <button id="convert-btn" class="w-full py-3 btn-primary text-white rounded-lg font-medium flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                            <i class="fas fa-sync-alt mr-2"></i>
+                            Convert to PDF
+                        </button>
+                        
+                        <div id="conversion-progress" class="hidden">
+                            <div class="mb-2 flex justify-between">
+                                <span class="text-sm font-medium text-gray-700">Converting...</span>
+                                <span id="progress-percentage" class="text-sm font-medium text-indigo-600">0%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        
+                        <div id="download-section" class="hidden">
+                            <div class="p-4 bg-green-50 border border-green-200 rounded-lg mb-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-green-500 text-xl mr-3"></i>
+                                    <p class="text-green-700 font-medium">Conversion Complete!</p>
+                                </div>
+                            </div>
+                            
+                            <button id="download-btn" class="w-full py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium flex items-center justify-center transition">
+                                <i class="fas fa-download mr-2"></i>
+                                Download PDF
+                            </button>
+                            
+                            <div class="mt-4 text-center">
+                                <button id="convert-another" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+                                    Convert Another File
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Side Ad -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12">
+            <div class="lg:col-span-3">
+                <!-- Features Section -->
+                <section id="features" class="mb-12">
+                    <h2 class="text-2xl font-bold mb-6 text-gray-800">Key Features</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="feature-card bg-white p-6 rounded-xl shadow-md">
+                            <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
+                                <i class="fas fa-bolt text-indigo-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold mb-2">Fast Conversion</h3>
+                            <p class="text-gray-600">Convert your PMD files to PDF in seconds with our optimized processing engine.</p>
+                        </div>
+                        
+                        <div class="feature-card bg-white p-6 rounded-xl shadow-md">
+                            <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
+                                <i class="fas fa-sliders-h text-indigo-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold mb-2">Customizable Options</h3>
+                            <p class="text-gray-600">Choose from multiple editing levels and customize your PDF output to your needs.</p>
+                        </div>
+                        
+                        <div class="feature-card bg-white p-6 rounded-xl shadow-md">
+                            <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
+                                <i class="fas fa-shield-alt text-indigo-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold mb-2">Secure Processing</h3>
+                            <p class="text-gray-600">Your files are processed securely in your browser and never uploaded to any server.</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- How It Works Section -->
+                <section id="how-it-works" class="mb-12">
+                    <h2 class="text-2xl font-bold mb-6 text-gray-800">How It Works</h2>
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <ol class="space-y-6">
+                            <li class="flex">
+                                <div class="flex-shrink-0 w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center mr-4">1</div>
+                                <div>
+                                    <h3 class="font-semibold text-lg mb-1">Upload Your PMD File</h3>
+                                    <p class="text-gray-600">Drag and drop your PMD file into the upload area or click to browse your files.</p>
+                                </div>
+                            </li>
+                            <li class="flex">
+                                <div class="flex-shrink-0 w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center mr-4">2</div>
+                                <div>
+                                    <h3 class="font-semibold text-lg mb-1">Select Editing Level & Options</h3>
+                                    <p class="text-gray-600">Choose your preferred editing level and customize additional options for your PDF.</p>
+                                </div>
+                            </li>
+                            <li class="flex">
+                                <div class="flex-shrink-0 w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center mr-4">3</div>
+                                <div>
+                                    <h3 class="font-semibold text-lg mb-1">Convert & Download</h3>
+                                    <p class="text-gray-600">Click the convert button and download your optimized PDF file instantly.</p>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+                </section>
+                
+                <!-- FAQ Section -->
+                <section id="faq" class="mb-12">
+                    <h2 class="text-2xl font-bold mb-6 text-gray-800">Frequently Asked Questions</h2>
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                        <div class="divide-y divide-gray-200">
+                            <div class="p-6">
+                                <button class="faq-question w-full flex justify-between items-center focus:outline-none" data-target="answer1">
+                                    <h3 class="text-lg font-medium text-gray-800">What is a PMD file?</h3>
+                                    <i class="fas fa-chevron-down text-indigo-600 transition-transform"></i>
+                                </button>
+                                <div id="answer1" class="faq-answer mt-3 text-gray-600 hidden">
+                                    <p>PMD files are typically markdown-based document files that contain formatted text and structure. They are commonly used in certain documentation systems and can be converted to more widely used formats like PDF.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="p-6">
+                                <button class="faq-question w-full flex justify-between items-center focus:outline-none" data-target="answer2">
+                                    <h3 class="text-lg font-medium text-gray-800">What are the different editing levels?</h3>
+                                    <i class="fas fa-chevron-down text-indigo-600 transition-transform"></i>
+                                </button>
+                                <div id="answer2" class="faq-answer mt-3 text-gray-600 hidden">
+                                    <p>We offer four editing levels:</p>
+                                    <ul class="list-disc pl-5 mt-2 space-y-1">
+                                        <li><strong>Basic:</strong> Simple conversion with minimal formatting</li>
+                                        <li><strong>Standard:</strong> Preserves formatting and document structure</li>
+                                        <li><strong>Advanced:</strong> Enhanced formatting with optimized layout</li>
+                                        <li><strong>Professional:</strong> Complete optimization with additional features</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="p-6">
+                                <button class="faq-question w-full flex justify-between items-center focus:outline-none" data-target="answer3">
+                                    <h3 class="text-lg font-medium text-gray-800">Is this service free to use?</h3>
+                                    <i class="fas fa-chevron-down text-indigo-600 transition-transform"></i>
+                                </button>
+                                <div id="answer3" class="faq-answer mt-3 text-gray-600 hidden">
+                                    <p>Yes, our PMD to PDF converter is completely free to use. We support our service through non-intrusive advertisements. For high-volume usage or additional features, we also offer premium plans.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="p-6">
+                                <button class="faq-question w-full flex justify-between items-center focus:outline-none" data-target="answer4">
+                                    <h3 class="text-lg font-medium text-gray-800">Is my data secure?</h3>
+                                    <i class="fas fa-chevron-down text-indigo-600 transition-transform"></i>
+                                </button>
+                                <div id="answer4" class="faq-answer mt-3 text-gray-600 hidden">
+                                    <p>Absolutely. All file processing happens directly in your browser. Your files are never uploaded to our servers, ensuring complete privacy and security of your data.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Side Ad Container -->
+            <div class="lg:col-span-1">
+                <div class="sticky top-6">
+                    <div class="ad-container rounded-lg h-full min-h-[600px]" id="side-ad">
+                        <p class="text-gray-500 text-sm">Advertisement Space</p>
+                        <!-- Google AdSense Ad will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Ad Banner -->
+        <div class="mb-12">
+            <div class="ad-container rounded-lg" id="bottom-ad">
+                <p class="text-gray-500 text-sm">Advertisement Space</p>
+                <!-- Google AdSense Ad will be inserted here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">PMD to PDF Converter</h3>
+                    <p class="text-gray-400">The easiest way to convert your PMD files to high-quality PDF documents online.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#features" class="text-gray-400 hover:text-white transition">Features</a></li>
+                        <li><a href="#how-it-works" class="text-gray-400 hover:text-white transition">How It Works</a></li>
+                        <li><a href="#faq" class="text-gray-400 hover:text-white transition">FAQ</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                    <p class="text-gray-400 mb-2">Have questions or feedback?</p>
+                    <a href="mailto:support@pmdtopdf.com" class="text-indigo-400 hover:text-indigo-300 transition">support@pmdtopdf.com</a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center">
+                <p class="text-gray-400">&copy; 2023 PMD to PDF Converter. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Google AdSense Script -->
+    <script>
+        // Function to load Google AdSense
+        function loadAdSense() {
+            // This is where you would insert your Google AdSense code
+            // Replace 'YOUR-ADSENSE-CLIENT-ID' with your actual AdSense Client ID
+            /*
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            */
+            
+            // For demonstration purposes, we'll just style the ad containers
+            const adContainers = document.querySelectorAll('.ad-container');
+            adContainers.forEach(container => {
+                container.innerHTML = `
+                    <div class="bg-gray-100 p-4 rounded text-center">
+                        <p class="text-gray-500 font-medium">Advertisement</p>
+                        <p class="text-xs text-gray-400 mt-2">Insert your Google AdSense Ad Unit ID here</p>
+                    </div>
+                `;
+            });
+        }
+    </script>
+
+    <!-- Main JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load AdSense
+            loadAdSense();
+            
+            // File Upload Handling
+            const dropArea = document.getElementById('drop-area');
+            const fileInput = document.getElementById('file-input');
+            const browseBtn = document.getElementById('browse-btn');
+            const fileInfo = document.getElementById('file-info');
+            const fileName = document.getElementById('file-name');
+            const fileSize = document.getElementById('file-size');
+            const removeFileBtn = document.getElementById('remove-file');
+            const convertBtn = document.getElementById('convert-btn');
+            const conversionProgress = document.getElementById('conversion-progress');
+            const progressBar = document.getElementById('progress-bar');
+            const progressPercentage = document.getElementById('progress-percentage');
+            const downloadSection = document.getElementById('download-section');
+            const downloadBtn = document.getElementById('download-btn');
+            const convertAnother = document.getElementById('convert-another');
+            
+            let selectedFile = null;
+            
+            // Drag and drop events
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropArea.addEventListener(eventName, highlight, false);
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, unhighlight, false);
+            });
+            
+            function highlight() {
+                dropArea.classList.add('active');
+            }
+            
+            function unhighlight() {
+                dropArea.classList.remove('active');
+            }
+            
+            // Handle file drop
+            dropArea.addEventListener('drop', handleDrop, false);
+            
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                
+                if (files.length > 0) {
+                    handleFiles(files[0]);
+                }
+            }
+            
+            // Handle file selection via browse button
+            browseBtn.addEventListener('click', () => {
+                fileInput.click();
+            });
+            
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFiles(e.target.files[0]);
+                }
+            });
+            
+            // Process the selected file
+            function handleFiles(file) {
+                selectedFile = file;
+                
+                // Display file info
+                fileName.textContent = file.name;
+                fileSize.textContent = formatFileSize(file.size);
+                fileInfo.classList.remove('hidden');
+                
+                // Enable convert button
+                convertBtn.disabled = false;
+            }
+            
+            // Format file size
+            function formatFileSize(bytes) {
+                if (bytes < 1024) return bytes + ' bytes';
+                else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+                else return (bytes / 1048576).toFixed(1) + ' MB';
+            }
+            
+            // Remove selected file
+            removeFileBtn.addEventListener('click', () => {
+                selectedFile = null;
+                fileInput.value = '';
+                fileInfo.classList.add('hidden');
+                convertBtn.disabled = true;
+            });
+            
+            // Handle conversion
+            convertBtn.addEventListener('click', () => {
+                if (!selectedFile) return;
+                
+                // Show progress
+                convertBtn.disabled = true;
+                conversionProgress.classList.remove('hidden');
+                
+                // Simulate conversion process
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += Math.random() * 10;
+                    if (progress >= 100) {
+                        progress = 100;
+                        clearInterval(interval);
+                        
+                        // Show download section after a short delay
+                        setTimeout(() => {
+                            conversionProgress.classList.add('hidden');
+                            downloadSection.classList.remove('hidden');
+                        }, 500);
+                    }
+                    
+                    progressBar.style.width = `${progress}%`;
+                    progressPercentage.textContent = `${Math.round(progress)}%`;
+                }, 200);
+                
+                // In a real implementation, this is where you would process the PMD file
+                // and convert it to PDF using the selected options
+                processPmdFile(selectedFile);
+            });
+            
+            // Process PMD file (simulated)
+            function processPmdFile(file) {
+                // This is a simplified simulation
+                // In a real implementation, you would:
+                // 1. Read the PMD file
+                // 2. Parse its content
+                // 3. Apply the selected editing level and options
+                // 4. Generate a PDF using pdf-lib or similar library
+                
+                // For demo purposes, we'll just read the file as text
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const content = e.target.result;
+                    
+                    // Store the content for download
+                    window.convertedPdf = {
+                        filename: file.name.replace(/\.[^/.]+$/, "") + ".pdf",
+                        content: simulatePdfConversion(content)
+                    };
+                };
+                reader.readAsText(file);
+            }
+            
+            // Simulate PDF conversion (in a real app, you would use pdf-lib or similar)
+            function simulatePdfConversion(content) {
+                // This is just a placeholder
+                // In a real implementation, you would convert the content to PDF
+                return new Blob([content], { type: 'application/pdf' });
+            }
+            
+            // Handle download
+            downloadBtn.addEventListener('click', () => {
+                if (window.convertedPdf) {
+                    const url = URL.createObjectURL(window.convertedPdf.content);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = window.convertedPdf.filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }
+            });
+            
+            // Convert another file
+            convertAnother.addEventListener('click', () => {
+                selectedFile = null;
+                fileInput.value = '';
+                fileInfo.classList.add('hidden');
+                downloadSection.classList.add('hidden');
+                convertBtn.disabled = true;
+            });
+            
+            // FAQ Accordion
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const targetId = question.getAttribute('data-target');
+                    const answer = document.getElementById(targetId);
+                    
+                    // Toggle answer visibility
+                    answer.classList.toggle('hidden');
+                    
+                    // Toggle icon rotation
+                    const icon = question.querySelector('i');
+                    icon.classList.toggle('transform');
+                    icon.classList.toggle('rotate-180');
+                });
+            });
+            
+            // Range slider background update
+            const qualitySlider = document.getElementById('quality-slider');
+            qualitySlider.addEventListener('input', function() {
+                const value = (this.value - this.min) / (this.max - this.min) * 100;
+                this.style.backgroundImage = `linear-gradient(to right, #4f46e5 0%, #4f46e5 ${value}%, #e2e8f0 ${value}%, #e2e8f0 100%)`;
+            });
+            
+            // Initialize slider background
+            qualitySlider.dispatchEvent(new Event('input'));
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9696d533619ab550',t:'MTc1NDIzNDc4MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
